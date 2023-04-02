@@ -1,5 +1,5 @@
 async function fetchData() {
-    const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Tombstone&appid=16a34368def6b27b3322796818634fa8&units=metric');
+    const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Tombstone&appid=(API key)&units=metric');
   
     const data = await response.json();
     const name = document.getElementById("name")
@@ -20,7 +20,7 @@ async function fetchData() {
   searchBar.addEventListener("submit", async function(e) {
     e.preventDefault();
     const searchfield = document.getElementById("form").value;
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${searchfield}&appid=16a34368def6b27b3322796818634fa8&units=metric`);
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${searchfield}&appid=(API KEY)&units=metric`);
     const data = await response.json();
     const name = document.getElementById("name")
     name.innerHTML = data.name;
