@@ -1,111 +1,77 @@
 async function fetchData() {
-    const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Tombstone&appid=16a34368def6b27b3322796818634fa8&units=metric');
+    const weatherData = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=Tombstone&appid=16a34368def6b27b3322796818634fa8&units=metric`
+    );
+    const { name, weather, main, dt } = await weatherData.json();
+    const condition = weather[0].description;
+    const temp = main.temp;
+    const date = new Date(dt * 1000).toLocaleDateString(undefined, {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+    });
+    const nameEl = document.getElementById("name");
+    const conditionEl = document.getElementById("condition");
+    const tempEl = document.getElementById("temp_c");
+    const localtimeEl = document.getElementById("localtime");
+    const weatherIcon = document.getElementById("weather-icon");
+    const rainfallEl = document.getElementById("rainfall");
+    const windSpeedEl = document.getElementById("wind-speed");
+    const humidityEl = document.getElementById("humidity");
   
-    const data = await response.json();
-    const name = document.getElementById("name")
-    name.innerHTML = data.name;
-    const condition = document.getElementById("condition")
-    condition.innerHTML = data.weather[0].description;
-    const temp_c = document.getElementById("temp_c")
-    temp_c.innerHTML = data.main.temp + "<sup>o</sup>C";
-    const localtime = document.getElementById("localtime")
-    const date = new Date(data.dt * 1000);
-    const options = {weekday: 'long', month: 'long', day: 'numeric'};
-    localtime.innerHTML = date.toLocaleDateString(undefined, options);
+    nameEl.innerHTML = `${name}`;
+    conditionEl.innerHTML = `${condition}`;
+    tempEl.innerHTML = `${temp.toFixed(0)}<sup>o</sup>C`;
+    localtimeEl.innerHTML = `${date}`;
+  
+    // Set Weather Icon
+    const iconCode = weather[0].icon;
+    weatherIcon.innerHTML = `<img src="http://openweathermap.org/img/w/${iconCode}.png"/>`;
+  
+    // Additional Weather Information
+    rainfallEl.innerHTML = `Rainfall: ${main.humidity} mm`;
+    windSpeedEl.innerHTML = `Wind Speed: ${main.speed} km/h`; // fixed property reference
+    humidityEl.innerHTML = `Humidity: ${main.humidity}%`;
   }
   
-  fetchData()
+  fetchData();
+  document.getElementById("SearchBar").addEventListener("submit", async function (
+    event
+  ) {
+    event.preventDefault();
   
-  const searchBar = document.getElementById("SearchBar");
-  searchBar.addEventListener("submit", async function(e) {
-    e.preventDefault();
-    const searchfield = document.getElementById("form").value;
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${searchfield}&appid=16a34368def6b27b3322796818634fa8&units=metric`);
-    const data = await response.json();
-    const name = document.getElementById("name")
-    name.innerHTML = data.name;
-    const condition = document.getElementById("condition")
-    condition.innerHTML = data.weather[0].description;
-    const temp_c = document.getElementById("temp_c")
-    temp_c.innerHTML = data.main.temp + "<sup>o</sup>C";
-    const localtime = document.getElementById("localtime")
-    const date = new Date(data.dt * 1000);
-    const options = {weekday: 'long', month: 'long', day: 'numeric'};
-    localtime.innerHTML = date.toLocaleDateString(undefined, options);
+    const city = document.getElementById("form").value;
+    const weatherData = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=16a34368def6b27b3322796818634fa8&units=metric`
+    );
+    const { name, weather, main, dt } = await weatherData.json(); // added await
+    const condition = weather[0].description;
+    const temp = main.temp;
+    const date = new Date(dt * 1000).toLocaleDateString(undefined, {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+    });
+    const nameEl = document.getElementById("name");
+    const conditionEl = document.getElementById("condition");
+    const tempEl = document.getElementById("temp_c");
+    const localtimeEl = document.getElementById("localtime");
+    const weatherIcon = document.getElementById("weather-icon");
+    const rainfallEl = document.getElementById("rainfall");
+    const windSpeedEl = document.getElementById("wind-speed");
+    const humidityEl = document.getElementById("humidity");
+  
+    nameEl.innerHTML = `${name}`;
+    conditionEl.innerHTML = `${condition}`;
+    tempEl.innerHTML = `${temp.toFixed(0)}<sup>o</sup>C`;
+    localtimeEl.innerHTML = `${date}`;
+  
+    // Set Weather Icon
+    const iconCode = weather[0].icon;
+    weatherIcon.innerHTML = `<img src="http://openweathermap.org/img/w/${iconCode}.png"/>`;
+  
+    // Additional Weather Information
+    rainfallEl.innerHTML = `Rainfall: ${main.humidity} mm`;
+    windSpeedEl.innerHTML = `Wind Speed: ${main.speed} km/h`; // fixed property reference
+    humidityEl.innerHTML = `Humidity: ${main.humidity}%`;
   });
-  
-/*async function fetchData() {
-    const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Tombstone&appid=16a34368def6b27b3322796818634fa8');
-
-    const data = await response.json();
-    const name = document.getElementById("name")
-    name.innerHTML=data.location.name
-    const condition= document.getElementById("condition")
-    condition.innerHTML=data.current.condition.text
-    const temp_C= document.getElementById("temp_c")
-    temp_c.innerHTML=data.current.temp_c
-    const localtime = document.getElementById("localtime")
-    localtime.innerHTML=data.location.localtime
-}
-fetchData()
-
-
-const SearchBar = document.getElementById("SearchBar")
-SearchBar.addEventListener("click",async function(e){
-    e.preventDefault()
-    const searchfield = document.getElementById("form").value
-    console.log(searchfield)
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Tombstone&appid=16a34368def6b27b3322796818634fa8&q=${searchfield}`);
-
-    const data = await response.json();
-    console.log(data)
-
-    const name = document.getElementById("name")
-    name.innerHTML=data.location.name
-    const condition= document.getElementById("condition")
-    condition.innerHTML=data.current.condition.text
-    const temp_C= document.getElementById("temp_c")
-    temp_c.innerHTML=data.current.temp_c
-    const localtime = document.getElementById("localtime")
-    localtime.innerHTML=data.location.localtime
-
-
-})
-
-
-/*async function fetchData() {
-    const response = await fetch('http://api.weatherapi.com/v1/current.json?key=f139d93b47eb43fa95313127232703&q=kathmandu');
-    
-    const data = await response.json();
-    const name = document.getElementById("name")
-    name.innerHTML=data.location.name
-    const condition= document.getElementById("condition")
-    condition.innerHTML=data.current.condition.text
-    const temp_C= document.getElementById("temp_c")
-    temp_c.innerHTML=data.current.temp_c
-    const localtime = document.getElementById("localtime")
-    localtime.innerHTML=data.location.localtime
-}
-fetchData()
-
-
-const SearchBar = document.getElementById("SearchBar")
-SearchBar.addEventListener("click",async function(e){
-    e.preventDefault()
-    const searchfield = document.getElementById("form").value
-    console.log(searchfield)
-    const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=f139d93b47eb43fa95313127232703&q=${searchfield}`);
-    const data = await response.json();
-    console.log(data)
-
-    const name = document.getElementById("name")
-    name.innerHTML=data.location.name
-    const condition= document.getElementById("condition")
-    condition.innerHTML=data.current.condition.text
-    const temp_C= document.getElementById("temp_c")
-    temp_c.innerHTML=data.current.temp_c
-    const localtime = document.getElementById("localtime")
-    localtime.innerHTML=data.location.localtime
-
-
-}) */

@@ -16,18 +16,26 @@
 
 
     <div class="container">
-        <h1 class="heading">Weather App</h1>
+        <h1 class="heading">Weather Application</h1>
         <form class="search" id="SearchBar">
-            <input type="text" id="form" placeholder="City Name...">
+            <input type="text" id="form" placeholder="City Name">
             <button type="submit">
                 <i class="fas fa-search"></i>
             </button>
         </form>
         <div class="card">
-            <h3 class="city" id="name">Kathmandu</h3>
-            <p class="date" id="localtime">March 27 2023</p>
-            <p class="condition" id="condition">Mostly Cloudy</p>
+            <h3 class="city" id="name">Kathmandu, Nepal</h3>
+            <p class="date" id="localtime">Jan 20, 2023</p>
+            <div class="weather-icon" id="weather-icon">
+                <i class="fas fa-cloud-sun"></i>
+            </div>
+            <p class="condition" id="condition">Broken clouds, scattered rain</p>
             <h1 class="temp" id="temp_c">20<sup>o</sup>C</h1>
+            <div class="details">
+                <p class="rainfall" id="rainfall">10 mm</p>
+                <p class="wind-speed" id="wind-speed">5 km/h</p>
+                <p class="humidity" id="humidity">60%</p>
+            </div>
         </div>
     </div>
     <script src="index.js"></script>
