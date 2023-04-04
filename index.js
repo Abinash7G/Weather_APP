@@ -43,7 +43,7 @@ async function fetchData() {
     const city = document.getElementById("form").value;
     const weatherData = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=16a34368def6b27b3322796818634fa8&units=metric`
-    ); // added await
+    ); 
     const { name, weather, main, dt } = await weatherData.json(); // added await
     const condition = weather[0].description;
     const temp = main.temp;
