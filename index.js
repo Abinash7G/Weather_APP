@@ -30,7 +30,7 @@ async function fetchData() {
   
     // Additional Weather Information
     rainfallEl.innerHTML = `Rainfall: ${main.humidity} mm`;
-    windSpeedEl.innerHTML = `Wind Speed: ${main.speed} km/h`; // fixed property reference
+    windSpeedEl.innerHTML = `Wind Speed: ${main.speed} km/h`; 
     humidityEl.innerHTML = `Humidity: ${main.humidity}%`;
   }
   
@@ -44,7 +44,7 @@ async function fetchData() {
     const weatherData = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=16a34368def6b27b3322796818634fa8&units=metric`
     ); 
-    const { name, weather, main, dt } = await weatherData.json(); // added await
+    const { name, weather, main, dt } = await weatherData.json(); 
     const condition = weather[0].description;
     const temp = main.temp;
     const date = new Date(dt * 1000).toLocaleDateString(undefined, {
@@ -72,6 +72,6 @@ async function fetchData() {
   
     // Additional Weather Information
     rainfallEl.innerHTML = `Rainfall: ${main.humidity} mm`;
-    windSpeedEl.innerHTML = `Wind Speed: ${main.speed} km/h`; // fixed property reference
+    windSpeedEl.innerHTML = `Wind Speed: ${main.speed} km/h`; 
     humidityEl.innerHTML = `Humidity: ${main.humidity}%`;
   });
